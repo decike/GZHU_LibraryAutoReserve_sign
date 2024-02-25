@@ -27,13 +27,13 @@
 <br/>
 
 # 运行
-
+下面的教程部署在服务器或云函数, 如需用 Github Action 部署, 请查看
 1. 克隆或者下载代码
 
 2. 安装依赖
 
    ~~~shell
-   pip install -r requirements.txt
+   pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ~~~
 
 3. 修改 `libs\info.py`文件，填上自己的学号、密码以及要预约的座位号
@@ -80,16 +80,25 @@
       ![image-20230514115141532](https://img-blog.csdnimg.cn/0e99a68cb9294e0c9185887bb7e8839b.png)
 
    3. 点管理控制台
+   
    4. 选择服务及函数，再点击创建服务，随便给个名字，例如我取名叫 `Library`
       ![image](https://github.com/ChaXxl/GZHU_LibraryAutoReserve_sign/assets/40326898/31bc937b-8f67-4579-b6ae-bb280fb77f1b)
+      
    5. 创建`两个函数`，分别用于预约和签到。
-         * 创建函数的方式：使用自定义运行时创建
-         * 名字：可以叫做 `reserve` 和 `sign`，随意
-         * 代码上传方式：可以选择通过文件夹上传代码，反正上传代码就行
-         * 预约函数的启动命令：`python reserve.py`
-         * 签到函数的启动命令：`python sign.py`
-         * 监听端口：这个我们用不到，随便填个9000即可
+         * 创建函数的方式：使用内置运行时创建
+         * 函数名称：可以叫做 `Reserve` 和 `Sign`，随意
+         * 请求处理程序类型：处理 HTTP 请求
+         * 运行环境：Python 3.8 以上就行
+         * 代码上传方式：可以选择通过文件夹 或 zip 包上传代码，反正上传代码就行
+         * 执行超时时间：160 以上
+         * 请求处理程序： 分别是`reserve.main`、`sign.main`(即执行 rserve.py 里的 main 函数和 sign.py 里的 main 函数)
          * 其余参数默认即可
+         
+         ![image-20231105092652349](https://img-blog.csdnimg.cn/36185a99601a47da818013f2b442aa53.png)
+         
+         
+         
+         ![image-20231105094104565](https://img-blog.csdnimg.cn/862e394da20b498fa9c023ba0ec917d3.png)
          
          <br/>
          
@@ -100,7 +109,7 @@
       * `-t .`: 表示将依赖安装置该目录下
       * `-r `: 指定对应的 requirements.txt 文件, 去安装这个文件里面的包     
       ~~~shell
-      pip install -t . -r requirements.txt
+      pip install -t . -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
       ~~~
       ![image](https://github.com/ChaXxl/GZHU_LibraryAutoReserve_sign/assets/40326898/dba1416d-9504-44ad-8b87-96b457b27e3f)
       
@@ -112,24 +121,25 @@
         ~~~shell
         CRON_TZ=Asia/Shanghai 20 15 6 * * *
         ~~~
-      ![image](https://github.com/ChaXxl/GZHU_LibraryAutoReserve_sign/assets/40326898/7894b695-0eb0-4f90-8400-0cbed5ff23dd)
+        ![image](https://github.com/ChaXxl/GZHU_LibraryAutoReserve_sign/assets/40326898/7894b695-0eb0-4f90-8400-0cbed5ff23dd)
       * 签到函数的触发方式，我这个是每天的 8:21、8:31、8:35、8:55、12:31、13:55、16:31、20:31... 触发，弄这么多个触发点是为了以防万一签到失败，多来几次
         ~~~shell
         CRON_TZ=Asia/Shanghai 0 21,30,35,55 8,12,13,16,20 * * *
-        ~~~     
+        ~~~
+      
    8.  代码上传后记得点击部署，也可以点一下测试函数看看能不能正常运行，只要有输出就说明正常，`不用管它的报错`
    
       ![image](https://github.com/ChaXxl/GZHU_LibraryAutoReserve_sign/assets/40326898/1ffc4d34-9691-4291-bc6d-e813bcdb1581)
 
 
-      
-      
-      
+​      
+​      
+​      
 
 
-   
 
-      
+
+​      
 
 <br/>
 
